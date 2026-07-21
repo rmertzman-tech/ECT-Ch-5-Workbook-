@@ -1,69 +1,516 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EBB Canvas HTML Package Index</title>
-<style>
-  body { font-family: Arial, Helvetica, sans-serif; line-height: 1.55; color: #1f2933; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-  h1 { font-size: 2rem; line-height: 1.2; margin-top: 2rem; border-bottom: 2px solid #d9e2ec; padding-bottom: .35rem; }
-  h2 { font-size: 1.45rem; line-height: 1.25; margin-top: 1.6rem; }
-  h3 { font-size: 1.18rem; margin-top: 1.25rem; }
-  p { margin: .7rem 0; }
-  blockquote { border-left: 4px solid #bcccdc; margin: 1rem 0; padding: .5rem 1rem; background: #f8fafc; font-weight: 600; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid #cbd2d9; padding: .45rem .55rem; vertical-align: top; }
-  th { background: #f0f4f8; text-align: left; }
-  .canvas-note { font-size: .9rem; color: #52606d; border-top: 1px solid #d9e2ec; margin-top: 2rem; padding-top: .75rem; }
-  nav.toc ul { columns: 2; }
-  @media print { body { max-width: none; margin: 0.5in; } nav.toc { display: none; } }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 5 Workbook v1.0 — Fairness and Capability Workbook</title>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --panel: #ffffff;
+      --ink: #24211c;
+      --muted: #625c52;
+      --line: #ded7ca;
+      --accent: #52633f;
+      --accent-dark: #314024;
+      --accent-soft: #edf2e6;
+      --warn: #7a4f00;
+      --warn-bg: #fff5df;
+      --good-bg: #edf7ec;
+      --shadow: 0 12px 28px rgba(45, 39, 30, 0.10);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #f7f5ef 0%, #e5eadc 100%);
+      line-height: 1.55;
+    }
+    header {
+      background: radial-gradient(circle at top left, #f3f6ed, #e4ead9 55%, #ccd7be 100%);
+      border-bottom-color: #b8c4aa;
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
+      padding: 28px 18px;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; }
+    .hero { display: grid; grid-template-columns: 1.6fr 0.9fr; gap: 20px; align-items: stretch; }
+    .hero-card, .side-card, section {
+      background: rgba(255,255,255,0.94);
+      border-color: var(--line);
+      border-style: solid;
+      border-width: 1px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-card { padding: 26px; }
+    .side-card { padding: 20px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; font-weight: 800; color: var(--accent-dark); }
+    h1 { margin: 8px 0 10px; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; }
+    h2 { margin-top: 0; color: var(--accent-dark); font-size: 1.55rem; }
+    h3 { color: var(--accent-dark); margin-bottom: 8px; }
+    p { margin-top: 0; }
+    .tagline { font-size: 1.15rem; color: #373228; max-width: 820px; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-color: #b7c6aa; border-style: solid; border-width: 1px;
+      border-radius: 999px; padding: 6px 10px; background: #f8fff2;
+      font-size: .88rem; color: var(--accent-dark); font-weight: 650;
+    }
+    .grid { display: grid; grid-template-columns: 260px 1fr; gap: 18px; margin-top: 18px; }
+    nav { position: sticky; top: 12px; align-self: start; }
+    .progress-box {
+      background: var(--panel); border-color: var(--line); border-style: solid; border-width: 1px;
+      border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px;
+    }
+    .bar { height: 12px; background: #e5dfd2; border-radius: 999px; overflow: hidden; margin: 8px 0 8px; }
+    .bar > div { height: 100%; width: 0%; background: var(--accent); transition-property: width; transition-duration: 200ms; transition-timing-function: ease; }
+    .toc { list-style: none; padding: 0; margin: 10px 0 0; }
+    .toc li { margin: 6px 0; }
+    .toc a { color: var(--accent-dark); text-decoration: none; font-weight: 700; font-size: .93rem; }
+    .toc a:hover, .toc a:focus { text-decoration: underline; }
+    main { display: grid; gap: 18px; }
+    section { padding: 22px; }
+    .section-kicker { color: var(--muted); font-weight: 750; margin-bottom: 6px; }
+    .callout {
+      background: var(--accent-soft); border-left-color: var(--accent); border-left-style: solid; border-left-width: 5px;
+      padding: 14px 16px; border-radius: 12px; margin: 14px 0;
+    }
+    .warning {
+      background: var(--warn-bg); border-left-color: var(--warn); border-left-style: solid; border-left-width: 5px;
+      padding: 14px 16px; border-radius: 12px; margin: 14px 0;
+    }
+    .success {
+      background: var(--good-bg); border-left-color: #4d7e46; border-left-style: solid; border-left-width: 5px;
+      padding: 14px 16px; border-radius: 12px; margin: 14px 0;
+    }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    label { display: block; font-weight: 800; margin: 14px 0 6px; color: #2f2a24; }
+    .hint { color: var(--muted); font-size: .92rem; margin-top: -3px; }
+    input[type="text"], select, textarea {
+      width: 100%; font: inherit; color: var(--ink); background: #fffdf8;
+      border-color: #bfb7a8; border-style: solid; border-width: 1px;
+      border-radius: 12px; padding: 10px 12px;
+    }
+    textarea { min-height: 94px; resize: vertical; }
+    input[type="text"]:focus, select:focus, textarea:focus, button:focus {
+      outline-color: #52633f; outline-style: solid; outline-width: 3px; outline-offset: 2px;
+    }
+    .required-mark { color: #7a2600; }
+    .checkline { display: flex; gap: 10px; align-items: flex-start; margin: 12px 0; }
+    .checkline input { margin-top: 5px; }
+    .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    button, .buttonlike {
+      appearance: none; border-color: var(--accent-dark); border-style: solid; border-width: 1px;
+      background: var(--accent); color: #fff; padding: 10px 14px; border-radius: 999px;
+      font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block;
+    }
+    button.secondary { background: #fffdf8; color: var(--accent-dark); }
+    button.danger { background: #7a3b2e; border-color: #5d2a20; }
+    button:hover { filter: brightness(0.97); }
+    .small { font-size: .9rem; color: var(--muted); }
+    .casebox {
+      border-color: #d5cdbc; border-style: solid; border-width: 1px; border-radius: 14px;
+      background: #fffaf0; padding: 16px; margin: 12px 0;
+    }
+    .output {
+      white-space: pre-wrap; background: #1f1d1a; color: #fffaf0; padding: 16px; border-radius: 14px;
+      min-height: 260px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92rem;
+    }
+    footer { padding: 24px 18px 40px; color: var(--muted); text-align: center; }
+    @media (max-width: 860px) {
+      .hero, .grid, .two, .three { grid-template-columns: 1fr; }
+      nav { position: static; }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="wrap hero">
+      <div class="hero-card">
+        <div class="eyebrow">Chapter 5 Workbook v1.0 · Classroom Version</div>
+        <h1>Fairness and Capability Workbook</h1>
+        <p class="tagline">Practice the Chapter 5 skill: testing whether a rule that looks fair on paper creates real capability for people in different positions.</p>
+        <div class="pill-row" aria-label="Workbook concepts">
+          <span class="pill">Social contract</span>
+          <span class="pill">Veil of ignorance</span>
+          <span class="pill">Formal permission</span>
+          <span class="pill">Real capability</span>
+          <span class="pill">Moral commons</span>
+        </div>
+      </div>
+      <aside class="side-card">
+        <h2>Chapter move</h2>
+        <p><strong>Test fairness.</strong></p>
+        <p class="small">Estimated time: 25–35 minutes. Your work is saved only in this browser unless you export it.</p>
+      </aside>
+    </div>
+  </header>
 
+  <div class="wrap grid">
+    <nav aria-label="Workbook progress">
+      <div class="progress-box">
+        <strong>Progress</strong>
+        <div class="bar" aria-hidden="true"><div id="progressFill"></div></div>
+        <div id="progressText" class="small">0% complete</div>
+        <ol class="toc">
+          <li><a href="#arrive">1. Arrive</a></li>
+          <li><a href="#case">2. Read the Case</a></li>
+          <li><a href="#rule">3. Rule and Unknown Position</a></li>
+          <li><a href="#benefits">4. Benefits and Burdens</a></li>
+          <li><a href="#capability">5. Permission vs Capability</a></li>
+          <li><a href="#care">6. Care and Moral Commons</a></li>
+          <li><a href="#limits">7. Responsibility and Limits</a></li>
+          <li><a href="#repair">8. Justice Repair</a></li>
+          <li><a href="#output">9. Output Card</a></li>
+        </ol>
+      </div>
+    </nav>
 
-<h1>Ethics and Critical Thinking — Canvas HTML Package</h1>
-<p>This package contains Canvas-friendly standalone HTML files and matching body-only fragments for the finalized textbook.</p>
-<h2>Complete book</h2>
-<ul><li><a href="full_book/EBB_complete_textbook_canvas_preview.html">Complete textbook preview HTML</a></li></ul>
-<h2>Individual pages</h2>
-<table><thead><tr><th>Order</th><th>Section</th><th>Approx. words</th></tr></thead><tbody><tr><td>00</td><td><a href="canvas_pages/00_title-page.html">Title Page</a></td><td>46</td></tr>
-<tr><td>01</td><td><a href="canvas_pages/01_table-of-contents.html">Table of Contents</a></td><td>192</td></tr>
-<tr><td>02</td><td><a href="canvas_pages/02_front-matter.html">Front Matter</a></td><td>118</td></tr>
-<tr><td>03</td><td><a href="canvas_pages/03_preface.html">Preface</a></td><td>997</td></tr>
-<tr><td>04</td><td><a href="canvas_pages/04_how-to-use-this-book.html">How to Use This Book</a></td><td>552</td></tr>
-<tr><td>05</td><td><a href="canvas_pages/05_the-ethics-beyond-boundaries-course-rhythm.html">The Ethics Beyond Boundaries Course Rhythm</a></td><td>238</td></tr>
-<tr><td>06</td><td><a href="canvas_pages/06_a-guide-to-prf-22-the-explainer-and-the-navigator.html">A Guide to PRF-22, the Explainer, and the Navigator</a></td><td>399</td></tr>
-<tr><td>07</td><td><a href="canvas_pages/07_privacy-choice-and-responsible-reflection.html">Privacy, Choice, and Responsible Reflection</a></td><td>267</td></tr>
-<tr><td>08</td><td><a href="canvas_pages/08_course-map-the-twelve-chapter-journey.html">Course Map: The Twelve Chapter Journey</a></td><td>336</td></tr>
-<tr><td>09</td><td><a href="canvas_pages/09_unit-1-seeing-responsibly.html">Unit 1 — Seeing Responsibly</a></td><td>654</td></tr>
-<tr><td>10</td><td><a href="canvas_pages/10_chapter-1.html">Chapter 1</a></td><td>3764</td></tr>
-<tr><td>11</td><td><a href="canvas_pages/11_chapter-2.html">Chapter 2</a></td><td>3498</td></tr>
-<tr><td>12</td><td><a href="canvas_pages/12_chapter-3.html">Chapter 3</a></td><td>3637</td></tr>
-<tr><td>13</td><td><a href="canvas_pages/13_unit-2-preserving-agency.html">Unit 2 — Preserving Agency</a></td><td>732</td></tr>
-<tr><td>14</td><td><a href="canvas_pages/14_chapter-4.html">Chapter 4</a></td><td>3474</td></tr>
-<tr><td>15</td><td><a href="canvas_pages/15_chapter-5.html">Chapter 5</a></td><td>3818</td></tr>
-<tr><td>16</td><td><a href="canvas_pages/16_chapter-6.html">Chapter 6</a></td><td>3456</td></tr>
-<tr><td>17</td><td><a href="canvas_pages/17_unit-3-acting-through-systems.html">Unit 3 — Acting Through Systems</a></td><td>612</td></tr>
-<tr><td>18</td><td><a href="canvas_pages/18_chapter-7.html">Chapter 7</a></td><td>3460</td></tr>
-<tr><td>19</td><td><a href="canvas_pages/19_chapter-8.html">Chapter 8</a></td><td>3577</td></tr>
-<tr><td>20</td><td><a href="canvas_pages/20_chapter-9.html">Chapter 9</a></td><td>3591</td></tr>
-<tr><td>21</td><td><a href="canvas_pages/21_unit-4-repairing-shared-worlds.html">Unit 4 — Repairing Shared Worlds</a></td><td>689</td></tr>
-<tr><td>22</td><td><a href="canvas_pages/22_chapter-10.html">Chapter 10</a></td><td>3305</td></tr>
-<tr><td>23</td><td><a href="canvas_pages/23_chapter-11.html">Chapter 11</a></td><td>3242</td></tr>
-<tr><td>24</td><td><a href="canvas_pages/24_chapter-12.html">Chapter 12</a></td><td>3633</td></tr>
-<tr><td>25</td><td><a href="canvas_pages/25_unit-4-closing-repairing-shared-worlds.html">Unit 4 Closing: Repairing Shared Worlds</a></td><td>207</td></tr>
-<tr><td>26</td><td><a href="canvas_pages/26_back-matter.html">Back Matter</a></td><td>2</td></tr>
-<tr><td>27</td><td><a href="canvas_pages/27_epilogue.html">Epilogue</a></td><td>701</td></tr>
-<tr><td>28</td><td><a href="canvas_pages/28_glossary.html">Glossary</a></td><td>1253</td></tr>
-<tr><td>29</td><td><a href="canvas_pages/29_tool-index.html">Tool Index</a></td><td>1250</td></tr>
-<tr><td>30</td><td><a href="canvas_pages/30_ethics-beyond-boundaries-integration-guide.html">Ethics Beyond Boundaries Integration Guide</a></td><td>635</td></tr>
-<tr><td>32</td><td><a href="canvas_pages/32_optional-instructor-implementation-notes.html">Optional Instructor Implementation Notes</a></td><td>233</td></tr>
-<tr><td>33</td><td><a href="canvas_pages/33_optional-historical-extension-case-map.html">Optional Historical Extension Case Map</a></td><td>372</td></tr>
-<tr><td>34</td><td><a href="canvas_pages/34_chapter-carry-forward-questions.html">Chapter Carry-Forward Questions</a></td><td>148</td></tr>
-<tr><td>35</td><td><a href="canvas_pages/35_personal-ethics-journal-reflection-question-archive.html">Personal Ethics Journal Reflection Question Archive</a></td><td>518</td></tr>
-<tr><td>36</td><td><a href="canvas_pages/36_final-student-portfolio-option.html">Final Student Portfolio Option</a></td><td>171</td></tr></tbody></table>
+    <main>
+      <section id="arrive">
+        <div class="section-kicker">1 · Arrive</div>
+        <h2>Fairness is not only sameness</h2>
+        <p>In Chapter 5, you learned that a rule can look equal on paper while working very differently in real life. This workbook helps you test whether a rule creates real capability, not merely formal permission.</p>
+        <div class="warning">
+          <strong>Privacy reminder:</strong> You may use the provided case, a fictional example, a public example, a historical example, a composite example, or a low-stakes personal example. Do not disclose private, identifying, or sensitive information.
+        </div>
+        <label class="checkline" for="privacy_ack"><input id="privacy_ack" data-required="true" type="checkbox"> <span>I understand that I should not disclose private, identifying, or sensitive information in this workbook. <span class="required-mark">*</span></span></label>
+      </section>
 
-<div class="canvas-note">Canvas note: This file uses semantic HTML only. You may paste the body content into a Canvas Page using the HTML editor.</div>
+      <section id="case">
+        <div class="section-kicker">2 · Read the Case</div>
+        <h2>Equal Access on Paper</h2>
+        <div class="casebox">
+          <p><strong>Case:</strong> A college moves all course materials online. The policy has good intentions: online materials can reduce costs, make updates easier, and let students access work from many places.</p>
+          <p>The college announces, “All students now have equal access to course materials online.” But some students have fast internet, updated laptops, quiet rooms, flexible schedules, and reliable transportation. Other students rely on phones, shared devices, unstable internet, crowded living spaces, work schedules, caregiving responsibilities, or public transportation.</p>
+          <p>On paper, everyone has access. In reality, access is easier for some students than for others.</p>
+        </div>
+        <label for="case_first_notice">What stands out first in this case? <span class="required-mark">*</span></label>
+        <textarea id="case_first_notice" data-required="true"></textarea>
+        <label for="case_initial_fairness">Why might the policy look fair at first? <span class="required-mark">*</span></label>
+        <textarea id="case_initial_fairness" data-required="true"></textarea>
+        <label for="case_hidden_problem">What might that first map miss? <span class="required-mark">*</span></label>
+        <textarea id="case_hidden_problem" data-required="true"></textarea>
+      </section>
+
+      <section id="rule">
+        <div class="section-kicker">3 · Rule and Unknown Position</div>
+        <h2>Apply the veil of ignorance</h2>
+        <div class="callout"><strong>Veil of ignorance:</strong> a fairness test that asks whether you would accept a rule if you did not know what position you would occupy under it.</div>
+        <label for="rule_policy">What rule or policy is being tested? <span class="required-mark">*</span></label>
+        <textarea id="rule_policy" data-required="true"></textarea>
+        <label for="unknown_position">If you did not know which student you would be, what positions would you need to imagine? <span class="required-mark">*</span></label>
+        <textarea id="unknown_position" data-required="true"></textarea>
+        <label for="accept_rule">Would you accept the rule from an unknown position as written, accept it only with support, or reject it? Explain. <span class="required-mark">*</span></label>
+        <textarea id="accept_rule" data-required="true"></textarea>
+      </section>
+
+      <section id="benefits">
+        <div class="section-kicker">4 · Benefits and Burdens</div>
+        <h2>Follow the burden without ignoring the benefits</h2>
+        <p>A rule can have real benefits and still distribute burdens unfairly. Chapter 5 asks you to see both.</p>
+        <label for="benefits_people">Who benefits from the rule or policy? <span class="required-mark">*</span></label>
+        <textarea id="benefits_people" data-required="true"></textarea>
+        <label for="burdened_people">Who may be burdened by the rule or policy? <span class="required-mark">*</span></label>
+        <textarea id="burdened_people" data-required="true"></textarea>
+        <label for="hidden_costs">What hidden costs might some people carry: time, money, risk, embarrassment, effort, or lost access? <span class="required-mark">*</span></label>
+        <textarea id="hidden_costs" data-required="true"></textarea>
+      </section>
+
+      <section id="capability">
+        <div class="section-kicker">5 · Permission vs Capability</div>
+        <h2>Distinguish equal wording from real access</h2>
+        <div class="callout"><strong>Formal permission:</strong> what the rule allows on paper. <br><strong>Real capability:</strong> the actual conditions needed to do or be something important.</div>
+        <label for="formal_permission">What is the formal permission in this case? <span class="required-mark">*</span></label>
+        <textarea id="formal_permission" data-required="true"></textarea>
+        <label for="real_capability">What conditions are required for the permission to become real capability? <span class="required-mark">*</span></label>
+        <textarea id="real_capability" data-required="true"></textarea>
+        <label for="capability_status">Best current diagnosis <span class="required-mark">*</span></label>
+        <select id="capability_status" data-required="true">
+          <option value="">Choose one</option>
+          <option>Formal permission is mostly matched by real capability</option>
+          <option>Formal permission exists, but real capability is uneven</option>
+          <option>Formal permission exists, but real capability is mostly blocked</option>
+          <option>Unsure; more information is needed</option>
+        </select>
+      </section>
+
+      <section id="care">
+        <div class="section-kicker">6 · Care and Moral Commons</div>
+        <h2>Notice dependency and shared conditions</h2>
+        <div class="callout"><strong>Moral commons:</strong> shared conditions such as trust, safety, voice, fairness, participation, and repair.</div>
+        <label for="care_dependency">What care responsibilities, support needs, bodies, schedules, or dependencies matter in this case? <span class="required-mark">*</span></label>
+        <textarea id="care_dependency" data-required="true"></textarea>
+        <label for="moral_commons">What shared moral commons is at stake? <span class="required-mark">*</span></label>
+        <textarea id="moral_commons" data-required="true"></textarea>
+      </section>
+
+      <section id="limits">
+        <div class="section-kicker">7 · Responsibility and Limits</div>
+        <h2>Preserve responsibility without pretending the map is complete</h2>
+        <p>Chapter 5 does not say standards should disappear. It asks whether standards are connected to real routes for meeting them.</p>
+        <label for="responsibility_belongs">Where does responsibility still belong in this case? <span class="required-mark">*</span></label>
+        <textarea id="responsibility_belongs" data-required="true"></textarea>
+        <label for="cannot_conclude">What still cannot be concluded from the information available? <span class="required-mark">*</span></label>
+        <textarea id="cannot_conclude" data-required="true"></textarea>
+      </section>
+
+      <section id="repair">
+        <div class="section-kicker">8 · Justice Repair</div>
+        <h2>Make the rule route into real participation</h2>
+        <p>Justice repair changes a rule, route, support, or condition so participation becomes more real and fair.</p>
+        <label for="repair_step_one">What repair would make the policy more fair without simply abandoning it? <span class="required-mark">*</span></label>
+        <textarea id="repair_step_one" data-required="true"></textarea>
+        <label for="repair_support_route">What support route would help people most burdened by the policy? <span class="required-mark">*</span></label>
+        <textarea id="repair_support_route" data-required="true"></textarea>
+        <label for="repair_success">What would count as a small but real improvement? <span class="required-mark">*</span></label>
+        <textarea id="repair_success" data-required="true"></textarea>
+      </section>
+
+      <section id="output">
+        <div class="section-kicker">9 · Output Card</div>
+        <h2>Generate your Chapter 5 Output Card</h2>
+        <p>The Output Card gathers your work into a format your instructor may ask you to submit or use for follow-up reflection.</p>
+        <label for="student_name">Optional name or identifier</label>
+        <input id="student_name" type="text" placeholder="Optional">
+        <div class="buttons">
+          <button type="button" onclick="generateOutput()">Generate Output Card</button>
+          <button type="button" class="secondary" onclick="copyOutput()">Copy Output Card</button>
+          <button type="button" class="secondary" onclick="downloadOutput()">Download Output Card</button>
+          <button type="button" class="secondary" onclick="downloadWorksheet()">Download Blank Worksheet</button>
+          <button type="button" class="danger" onclick="clearSaved()">Clear Saved Work</button>
+        </div>
+        <div id="completionMessage" class="success" hidden>You have completed the required workbook fields. Generate and save your Output Card.</div>
+        <h3>Output Preview</h3>
+        <pre id="outputText" class="output" aria-live="polite">Your Chapter 5 Output Card will appear here.</pre>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>Chapter 5 Workbook v1.0 · Classroom Version · Local-only HTML workbook. No network calls.</p>
+  </footer>
+
+  <script>
+    const STORAGE_KEY = 'ebb_ch5_fairness_capability_workbook_v1';
+    const fields = Array.from(document.querySelectorAll('textarea, input[type="text"], select, input[type="checkbox"]'));
+    const requiredFields = Array.from(document.querySelectorAll('[data-required="true"]'));
+
+    function fieldValue(el) {
+      if (el.type === 'checkbox') return el.checked;
+      return el.value || '';
+    }
+
+    function setFieldValue(el, value) {
+      if (el.type === 'checkbox') el.checked = Boolean(value);
+      else el.value = value || '';
+    }
+
+    function saveWork() {
+      const data = {};
+      fields.forEach(el => { data[el.id] = fieldValue(el); });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      updateProgress();
+    }
+
+    function loadWork() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) { updateProgress(); return; }
+      try {
+        const data = JSON.parse(raw);
+        fields.forEach(el => {
+          if (Object.prototype.hasOwnProperty.call(data, el.id)) setFieldValue(el, data[el.id]);
+        });
+      } catch (err) {
+        console.warn('Saved workbook data could not be loaded.', err);
+      }
+      updateProgress();
+    }
+
+    function isComplete(el) {
+      if (el.type === 'checkbox') return el.checked;
+      return Boolean((el.value || '').trim());
+    }
+
+    function updateProgress() {
+      const done = requiredFields.filter(isComplete).length;
+      const total = requiredFields.length;
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = pct + '% complete (' + done + ' of ' + total + ' required responses)';
+      document.getElementById('completionMessage').hidden = pct !== 100;
+    }
+
+    function get(id) {
+      const el = document.getElementById(id);
+      if (!el) return '';
+      if (el.type === 'checkbox') return el.checked ? 'Acknowledged' : 'Not acknowledged';
+      return (el.value || '').trim();
+    }
+
+    function generateOutput() {
+      const name = get('student_name') || 'Not provided';
+      const now = new Date().toLocaleString();
+      const output = `Chapter 5 Workbook Output Card — Fairness and Capability
+Generated: ${now}
+Optional name/identifier: ${name}
+
+1. Case first noticing
+${get('case_first_notice')}
+
+2. Why the policy may look fair at first
+${get('case_initial_fairness')}
+
+3. What the first map might miss
+${get('case_hidden_problem')}
+
+4. Rule or policy being tested
+${get('rule_policy')}
+
+5. Unknown positions to imagine
+${get('unknown_position')}
+
+6. Fairness-from-an-Unknown-Position judgment
+${get('accept_rule')}
+
+7. Benefits
+${get('benefits_people')}
+
+8. Burdens and hidden costs
+${get('burdened_people')}
+${get('hidden_costs')}
+
+9. Formal permission
+${get('formal_permission')}
+
+10. Real capability conditions
+${get('real_capability')}
+
+11. Current diagnosis
+${get('capability_status')}
+
+12. Care and dependency factors
+${get('care_dependency')}
+
+13. Moral commons at stake
+${get('moral_commons')}
+
+14. Responsibility still belongs here
+${get('responsibility_belongs')}
+
+15. What still cannot be concluded
+${get('cannot_conclude')}
+
+16. Justice repair proposal
+${get('repair_step_one')}
+
+17. Support route
+${get('repair_support_route')}
+
+18. Small but real improvement
+${get('repair_success')}
+
+Closing question: Would this rule seem fair from an unknown position, and what repair would make participation more real?`;
+      document.getElementById('outputText').textContent = output;
+      saveWork();
+      return output;
+    }
+
+    async function copyOutput() {
+      const output = generateOutput();
+      try {
+        await navigator.clipboard.writeText(output);
+        alert('Output Card copied to clipboard.');
+      } catch (err) {
+        alert('Copy failed. You can still select and copy the Output Preview manually.');
+      }
+    }
+
+    function downloadText(filename, text) {
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadOutput() {
+      const output = generateOutput();
+      downloadText('chapter5_fairness_capability_output_card.txt', output);
+    }
+
+    function downloadWorksheet() {
+      const worksheet = `Chapter 5 Workbook Worksheet — Fairness and Capability
+
+Privacy reminder: Use the provided case, a fictional example, a public example, a historical example, a composite example, or a low-stakes personal example. Do not disclose private, identifying, or sensitive information.
+
+Case: Equal Access on Paper
+A college moves all course materials online and announces that all students now have equal access. Some students have reliable technology, internet, quiet space, flexible schedules, and transportation. Other students rely on phones, shared devices, unstable internet, crowded living spaces, work schedules, caregiving responsibilities, or public transportation.
+
+1. What stands out first?
+
+2. Why might the policy look fair at first?
+
+3. What might that first map miss?
+
+4. What rule or policy is being tested?
+
+5. If you did not know which student you would be, what positions would you need to imagine?
+
+6. Would you accept the rule from an unknown position as written, accept it only with support, or reject it? Explain.
+
+7. Who benefits from the rule or policy?
+
+8. Who may be burdened?
+
+9. What hidden costs might some people carry?
+
+10. What is the formal permission?
+
+11. What conditions are required for the permission to become real capability?
+
+12. Best current diagnosis:
+
+13. What care responsibilities, support needs, bodies, schedules, or dependencies matter?
+
+14. What shared moral commons is at stake?
+
+15. Where does responsibility still belong?
+
+16. What still cannot be concluded?
+
+17. What repair would make the policy more fair without simply abandoning it?
+
+18. What support route would help people most burdened by the policy?
+
+19. What would count as a small but real improvement?
+`;
+      downloadText('chapter5_fairness_capability_blank_worksheet.txt', worksheet);
+    }
+
+    function clearSaved() {
+      if (!confirm('Clear saved work in this browser for Chapter 5?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      fields.forEach(el => setFieldValue(el, el.type === 'checkbox' ? false : ''));
+      document.getElementById('outputText').textContent = 'Your Chapter 5 Output Card will appear here.';
+      updateProgress();
+    }
+
+    fields.forEach(el => {
+      el.addEventListener('input', saveWork);
+      el.addEventListener('change', saveWork);
+    });
+    loadWork();
+  </script>
 </body>
 </html>
