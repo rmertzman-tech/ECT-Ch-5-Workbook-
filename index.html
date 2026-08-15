@@ -1,515 +1,429 @@
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chapter 5 Workbook v1.0 — Fairness and Capability Workbook</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Chapter 5 Workbook v2.0 — From Seven Trees to Fifty-One Million</title>
+<meta content="Accessible Chapter 5 workbook rebuilt on the finalized chapter text: Wangari Maathai's real case, functional equivalence, the OS1 Trap, three structural rules, gap junction, and the process trail." name="description"/>
+<style>
     :root {
-      --bg: #f7f5ef;
-      --panel: #ffffff;
-      --ink: #24211c;
-      --muted: #625c52;
-      --line: #ded7ca;
-      --accent: #52633f;
-      --accent-dark: #314024;
-      --accent-soft: #edf2e6;
-      --warn: #7a4f00;
-      --warn-bg: #fff5df;
-      --good-bg: #edf7ec;
-      --shadow: 0 12px 28px rgba(45, 39, 30, 0.10);
-      --radius: 18px;
+      --bg:#f7f5ef; --panel:#ffffff; --ink:#24211c; --muted:#625c52; --line:#ded7ca;
+      --accent:#52633f; --accent-dark:#314024; --accent-soft:#edf2e6;
+      --danger:#7a3b2e; --good-bg:#edf7ec; --shadow:0 12px 28px rgba(45,39,30,0.10); --radius:18px;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background: linear-gradient(180deg, #f7f5ef 0%, #e5eadc 100%);
-      line-height: 1.55;
-    }
-    header {
-      background: radial-gradient(circle at top left, #f3f6ed, #e4ead9 55%, #ccd7be 100%);
-      border-bottom-color: #b8c4aa;
-      border-bottom-style: solid;
-      border-bottom-width: 1px;
-      padding: 28px 18px;
-    }
-    .wrap { max-width: 1120px; margin: 0 auto; }
-    .hero { display: grid; grid-template-columns: 1.6fr 0.9fr; gap: 20px; align-items: stretch; }
-    .hero-card, .side-card, section {
-      background: rgba(255,255,255,0.94);
-      border-color: var(--line);
-      border-style: solid;
-      border-width: 1px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .hero-card { padding: 26px; }
-    .side-card { padding: 20px; }
-    .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; font-weight: 800; color: var(--accent-dark); }
-    h1 { margin: 8px 0 10px; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.05; }
-    h2 { margin-top: 0; color: var(--accent-dark); font-size: 1.55rem; }
-    h3 { color: var(--accent-dark); margin-bottom: 8px; }
-    p { margin-top: 0; }
-    .tagline { font-size: 1.15rem; color: #373228; max-width: 820px; }
-    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
-      border-color: #b7c6aa; border-style: solid; border-width: 1px;
-      border-radius: 999px; padding: 6px 10px; background: #f8fff2;
-      font-size: .88rem; color: var(--accent-dark); font-weight: 650;
-    }
-    .grid { display: grid; grid-template-columns: 260px 1fr; gap: 18px; margin-top: 18px; }
-    nav { position: sticky; top: 12px; align-self: start; }
-    .progress-box {
-      background: var(--panel); border-color: var(--line); border-style: solid; border-width: 1px;
-      border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px;
-    }
-    .bar { height: 12px; background: #e5dfd2; border-radius: 999px; overflow: hidden; margin: 8px 0 8px; }
-    .bar > div { height: 100%; width: 0%; background: var(--accent); transition-property: width; transition-duration: 200ms; transition-timing-function: ease; }
-    .toc { list-style: none; padding: 0; margin: 10px 0 0; }
-    .toc li { margin: 6px 0; }
-    .toc a { color: var(--accent-dark); text-decoration: none; font-weight: 700; font-size: .93rem; }
-    .toc a:hover, .toc a:focus { text-decoration: underline; }
-    main { display: grid; gap: 18px; }
-    section { padding: 22px; }
-    .section-kicker { color: var(--muted); font-weight: 750; margin-bottom: 6px; }
-    .callout {
-      background: var(--accent-soft); border-left-color: var(--accent); border-left-style: solid; border-left-width: 5px;
-      padding: 14px 16px; border-radius: 12px; margin: 14px 0;
-    }
-    .warning {
-      background: var(--warn-bg); border-left-color: var(--warn); border-left-style: solid; border-left-width: 5px;
-      padding: 14px 16px; border-radius: 12px; margin: 14px 0;
-    }
-    .success {
-      background: var(--good-bg); border-left-color: #4d7e46; border-left-style: solid; border-left-width: 5px;
-      padding: 14px 16px; border-radius: 12px; margin: 14px 0;
-    }
-    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    label { display: block; font-weight: 800; margin: 14px 0 6px; color: #2f2a24; }
-    .hint { color: var(--muted); font-size: .92rem; margin-top: -3px; }
-    input[type="text"], select, textarea {
-      width: 100%; font: inherit; color: var(--ink); background: #fffdf8;
-      border-color: #bfb7a8; border-style: solid; border-width: 1px;
-      border-radius: 12px; padding: 10px 12px;
-    }
-    textarea { min-height: 94px; resize: vertical; }
-    input[type="text"]:focus, select:focus, textarea:focus, button:focus {
-      outline-color: #52633f; outline-style: solid; outline-width: 3px; outline-offset: 2px;
-    }
-    .required-mark { color: #7a2600; }
-    .checkline { display: flex; gap: 10px; align-items: flex-start; margin: 12px 0; }
-    .checkline input { margin-top: 5px; }
-    .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-    button, .buttonlike {
-      appearance: none; border-color: var(--accent-dark); border-style: solid; border-width: 1px;
-      background: var(--accent); color: #fff; padding: 10px 14px; border-radius: 999px;
-      font-weight: 800; cursor: pointer; text-decoration: none; display: inline-block;
-    }
-    button.secondary { background: #fffdf8; color: var(--accent-dark); }
-    button.danger { background: #7a3b2e; border-color: #5d2a20; }
-    button:hover { filter: brightness(0.97); }
-    .small { font-size: .9rem; color: var(--muted); }
-    .casebox {
-      border-color: #d5cdbc; border-style: solid; border-width: 1px; border-radius: 14px;
-      background: #fffaf0; padding: 16px; margin: 12px 0;
-    }
-    .output {
-      white-space: pre-wrap; background: #1f1d1a; color: #fffaf0; padding: 16px; border-radius: 14px;
-      min-height: 260px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92rem;
-    }
-    footer { padding: 24px 18px 40px; color: var(--muted); text-align: center; }
-    @media (max-width: 860px) {
-      .hero, .grid, .two, .three { grid-template-columns: 1fr; }
-      nav { position: static; }
-    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--ink); background:linear-gradient(180deg,#f7f5ef 0%,#e5eadc 100%); line-height:1.55; }
+    header { background:radial-gradient(circle at top left,#f3f6ed,#e4ead9 55%,#ccd7be 100%); border-bottom:1px solid #b8c4aa; padding:28px 18px; }
+    .wrap { max-width:1120px; margin:0 auto; }
+    .hero { display:grid; grid-template-columns:1.6fr 0.9fr; gap:20px; align-items:stretch; }
+    .hero-card, .side-card, section { background:rgba(255,255,255,0.94); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+    .hero-card { padding:26px; } .side-card { padding:20px; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.08em; font-size:.78rem; font-weight:800; color:var(--accent-dark); }
+    h1 { margin:8px 0 10px; font-size:clamp(2rem,4vw,3.2rem); line-height:1.05; }
+    h2 { margin-top:0; color:var(--accent-dark); font-size:1.55rem; }
+    h3 { color:var(--accent-dark); margin-bottom:8px; }
+    p { margin-top:0; }
+    .tagline { font-size:1.15rem; color:#373228; max-width:820px; }
+    .pill-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .pill { display:inline-flex; align-items:center; gap:6px; border:1px solid #b7c6aa; border-radius:999px; padding:6px 10px; background:#f8fff2; font-size:.88rem; color:var(--accent-dark); font-weight:650; }
+    .grid { display:grid; grid-template-columns:260px 1fr; gap:18px; margin-top:18px; }
+    nav { position:sticky; top:12px; align-self:start; }
+    .progress-box { background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; }
+    .bar { height:12px; background:#e5dfd2; border-radius:999px; overflow:hidden; margin:8px 0; }
+    .bar > div { height:100%; width:0%; background:var(--accent); transition:width 200ms ease; }
+    .toc { list-style:none; padding:0; margin:10px 0 0; }
+    .toc li { margin:6px 0; }
+    .toc a { color:var(--accent-dark); text-decoration:none; font-weight:700; font-size:.93rem; }
+    .toc a:hover, .toc a:focus { text-decoration:underline; }
+    main { display:grid; gap:18px; }
+    section { padding:22px; }
+    .section-kicker { color:var(--muted); font-weight:750; margin-bottom:6px; }
+    .callout, .warning, .success, .casebox, .stop-box { border-style:solid; border-width:1px; border-radius:14px; padding:16px; margin:14px 0; }
+    .callout { background:var(--accent-soft); border-left:5px solid var(--accent); border-color:var(--line); }
+    .warning { background:#fff5df; border-left:5px solid #7a4f00; border-color:#e9d6a6; }
+    .success { background:var(--good-bg); border-left:5px solid #4d7e46; border-color:#c9e0c4; }
+    .casebox { background:#fffaf0; border-color:#d5cdbc; }
+    .stop-box { background:#fff0ee; border:2px solid var(--danger); }
+    .stop-box strong.stop-label { color:var(--danger); text-transform:uppercase; letter-spacing:.04em; font-size:.85rem; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    label { display:block; font-weight:800; margin:14px 0 6px; color:#2f2a24; }
+    .hint { color:var(--muted); font-size:.92rem; margin-top:-3px; }
+    textarea, select { width:100%; font:inherit; color:var(--ink); background:#fffdf8; border:1px solid #bfb7a8; border-radius:12px; padding:10px 12px; }
+    textarea { min-height:94px; resize:vertical; }
+    textarea:focus, select:focus, button:focus { outline:3px solid var(--accent-dark); outline-offset:2px; }
+    textarea[aria-invalid="true"], select[aria-invalid="true"] { border-color:var(--danger); background:#fff7f5; }
+    .checkline { display:flex; gap:10px; align-items:flex-start; margin:12px 0; padding:12px; background:#f7fbf4; border:1px solid #bac8b3; border-radius:12px; }
+    .checkline input { margin-top:5px; }
+    .zero-credit { display:block; margin-top:4px; color:var(--muted); font-weight:500; font-size:.88rem; }
+    .buttons { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+    button { border:1px solid var(--accent-dark); border-radius:999px; background:var(--accent); color:#fff; padding:10px 14px; font:inherit; font-weight:800; cursor:pointer; }
+    button.secondary { background:#fffdf8; color:var(--accent-dark); }
+    button.danger { background:var(--danger); border-color:#5d2a20; }
+    button:hover { filter:brightness(0.97); }
+    .small { font-size:.9rem; color:var(--muted); }
+    .error-inline { display:none; margin-top:6px; color:var(--danger); font-weight:700; font-size:.92rem; }
+    .error-summary { display:none; background:#fff5f3; border:2px solid var(--danger); border-radius:14px; padding:14px 16px; margin:14px 0; }
+    .error-summary h3 { color:var(--danger); margin-bottom:6px; }
+    #outputText { min-height:340px; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.9rem; }
+    footer { padding:24px 18px 40px; color:var(--muted); text-align:center; }
+    table.mini { width:100%; border-collapse:collapse; margin:12px 0; font-size:.92rem; }
+    table.mini th, table.mini td { border:1px solid #ddd5c6; padding:8px; text-align:left; vertical-align:top; }
+    table.mini th { background:#eef2e6; }
+    @media (max-width:860px) { .hero,.grid,.two { grid-template-columns:1fr; } nav { position:static; } }
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap hero">
-      <div class="hero-card">
-        <div class="eyebrow">Chapter 5 Workbook v1.0 · Classroom Version</div>
-        <h1>Fairness and Capability Workbook</h1>
-        <p class="tagline">Practice the Chapter 5 skill: testing whether a rule that looks fair on paper creates real capability for people in different positions.</p>
-        <div class="pill-row" aria-label="Workbook concepts">
-          <span class="pill">Social contract</span>
-          <span class="pill">Veil of ignorance</span>
-          <span class="pill">Formal permission</span>
-          <span class="pill">Real capability</span>
-          <span class="pill">Moral commons</span>
-        </div>
+<header>
+  <div class="wrap hero">
+    <div class="hero-card">
+      <div class="eyebrow">Chapter 5 Workbook · From Seven Trees to Fifty-One Million · v2.0</div>
+      <h1>From Seven Trees to Fifty-One Million</h1>
+      <p class="tagline"><strong>Wangari Maathai's real case</strong>, functional equivalence, the OS1 Trap, and three structural rules for coordinating across real disagreement — with a genuine process trail.</p>
+      <div class="pill-row">
+        <span class="pill">Case: Wangari Maathai</span>
+        <span class="pill">Functional Equivalence</span>
+        <span class="pill">The OS1 Trap</span>
+        <span class="pill">Gap Junction</span>
       </div>
-      <aside class="side-card">
-        <h2>Chapter move</h2>
-        <p><strong>Test fairness.</strong></p>
-        <p class="small">Estimated time: 25–35 minutes. Your work is saved only in this browser unless you export it.</p>
-      </aside>
     </div>
-  </header>
-
-  <div class="wrap grid">
-    <nav aria-label="Workbook progress">
-      <div class="progress-box">
-        <strong>Progress</strong>
-        <div class="bar" aria-hidden="true"><div id="progressFill"></div></div>
-        <div id="progressText" class="small">0% complete</div>
-        <ol class="toc">
-          <li><a href="#arrive">1. Arrive</a></li>
-          <li><a href="#case">2. Read the Case</a></li>
-          <li><a href="#rule">3. Rule and Unknown Position</a></li>
-          <li><a href="#benefits">4. Benefits and Burdens</a></li>
-          <li><a href="#capability">5. Permission vs Capability</a></li>
-          <li><a href="#care">6. Care and Moral Commons</a></li>
-          <li><a href="#limits">7. Responsibility and Limits</a></li>
-          <li><a href="#repair">8. Justice Repair</a></li>
-          <li><a href="#output">9. Output Card</a></li>
-        </ol>
-      </div>
-    </nav>
-
-    <main>
-      <section id="arrive">
-        <div class="section-kicker">1 · Arrive</div>
-        <h2>Fairness is not only sameness</h2>
-        <p>In Chapter 5, you learned that a rule can look equal on paper while working very differently in real life. This workbook helps you test whether a rule creates real capability, not merely formal permission.</p>
-        <div class="warning">
-          <strong>Privacy reminder:</strong> You may use the provided case, a fictional example, a public example, a historical example, a composite example, or a low-stakes personal example. Do not disclose private, identifying, or sensitive information.
-        </div>
-        <label class="checkline" for="privacy_ack"><input id="privacy_ack" data-required="true" type="checkbox"> <span>I understand that I should not disclose private, identifying, or sensitive information in this workbook. <span class="required-mark">*</span></span></label>
-      </section>
-
-      <section id="case">
-        <div class="section-kicker">2 · Read the Case</div>
-        <h2>Equal Access on Paper</h2>
-        <div class="casebox">
-          <p><strong>Case:</strong> A college moves all course materials online. The policy has good intentions: online materials can reduce costs, make updates easier, and let students access work from many places.</p>
-          <p>The college announces, “All students now have equal access to course materials online.” But some students have fast internet, updated laptops, quiet rooms, flexible schedules, and reliable transportation. Other students rely on phones, shared devices, unstable internet, crowded living spaces, work schedules, caregiving responsibilities, or public transportation.</p>
-          <p>On paper, everyone has access. In reality, access is easier for some students than for others.</p>
-        </div>
-        <label for="case_first_notice">What stands out first in this case? <span class="required-mark">*</span></label>
-        <textarea id="case_first_notice" data-required="true"></textarea>
-        <label for="case_initial_fairness">Why might the policy look fair at first? <span class="required-mark">*</span></label>
-        <textarea id="case_initial_fairness" data-required="true"></textarea>
-        <label for="case_hidden_problem">What might that first map miss? <span class="required-mark">*</span></label>
-        <textarea id="case_hidden_problem" data-required="true"></textarea>
-      </section>
-
-      <section id="rule">
-        <div class="section-kicker">3 · Rule and Unknown Position</div>
-        <h2>Apply the veil of ignorance</h2>
-        <div class="callout"><strong>Veil of ignorance:</strong> a fairness test that asks whether you would accept a rule if you did not know what position you would occupy under it.</div>
-        <label for="rule_policy">What rule or policy is being tested? <span class="required-mark">*</span></label>
-        <textarea id="rule_policy" data-required="true"></textarea>
-        <label for="unknown_position">If you did not know which student you would be, what positions would you need to imagine? <span class="required-mark">*</span></label>
-        <textarea id="unknown_position" data-required="true"></textarea>
-        <label for="accept_rule">Would you accept the rule from an unknown position as written, accept it only with support, or reject it? Explain. <span class="required-mark">*</span></label>
-        <textarea id="accept_rule" data-required="true"></textarea>
-      </section>
-
-      <section id="benefits">
-        <div class="section-kicker">4 · Benefits and Burdens</div>
-        <h2>Follow the burden without ignoring the benefits</h2>
-        <p>A rule can have real benefits and still distribute burdens unfairly. Chapter 5 asks you to see both.</p>
-        <label for="benefits_people">Who benefits from the rule or policy? <span class="required-mark">*</span></label>
-        <textarea id="benefits_people" data-required="true"></textarea>
-        <label for="burdened_people">Who may be burdened by the rule or policy? <span class="required-mark">*</span></label>
-        <textarea id="burdened_people" data-required="true"></textarea>
-        <label for="hidden_costs">What hidden costs might some people carry: time, money, risk, embarrassment, effort, or lost access? <span class="required-mark">*</span></label>
-        <textarea id="hidden_costs" data-required="true"></textarea>
-      </section>
-
-      <section id="capability">
-        <div class="section-kicker">5 · Permission vs Capability</div>
-        <h2>Distinguish equal wording from real access</h2>
-        <div class="callout"><strong>Formal permission:</strong> what the rule allows on paper. <br><strong>Real capability:</strong> the actual conditions needed to do or be something important.</div>
-        <label for="formal_permission">What is the formal permission in this case? <span class="required-mark">*</span></label>
-        <textarea id="formal_permission" data-required="true"></textarea>
-        <label for="real_capability">What conditions are required for the permission to become real capability? <span class="required-mark">*</span></label>
-        <textarea id="real_capability" data-required="true"></textarea>
-        <label for="capability_status">Best current diagnosis <span class="required-mark">*</span></label>
-        <select id="capability_status" data-required="true">
-          <option value="">Choose one</option>
-          <option>Formal permission is mostly matched by real capability</option>
-          <option>Formal permission exists, but real capability is uneven</option>
-          <option>Formal permission exists, but real capability is mostly blocked</option>
-          <option>Unsure; more information is needed</option>
-        </select>
-      </section>
-
-      <section id="care">
-        <div class="section-kicker">6 · Care and Moral Commons</div>
-        <h2>Notice dependency and shared conditions</h2>
-        <div class="callout"><strong>Moral commons:</strong> shared conditions such as trust, safety, voice, fairness, participation, and repair.</div>
-        <label for="care_dependency">What care responsibilities, support needs, bodies, schedules, or dependencies matter in this case? <span class="required-mark">*</span></label>
-        <textarea id="care_dependency" data-required="true"></textarea>
-        <label for="moral_commons">What shared moral commons is at stake? <span class="required-mark">*</span></label>
-        <textarea id="moral_commons" data-required="true"></textarea>
-      </section>
-
-      <section id="limits">
-        <div class="section-kicker">7 · Responsibility and Limits</div>
-        <h2>Preserve responsibility without pretending the map is complete</h2>
-        <p>Chapter 5 does not say standards should disappear. It asks whether standards are connected to real routes for meeting them.</p>
-        <label for="responsibility_belongs">Where does responsibility still belong in this case? <span class="required-mark">*</span></label>
-        <textarea id="responsibility_belongs" data-required="true"></textarea>
-        <label for="cannot_conclude">What still cannot be concluded from the information available? <span class="required-mark">*</span></label>
-        <textarea id="cannot_conclude" data-required="true"></textarea>
-      </section>
-
-      <section id="repair">
-        <div class="section-kicker">8 · Justice Repair</div>
-        <h2>Make the rule route into real participation</h2>
-        <p>Justice repair changes a rule, route, support, or condition so participation becomes more real and fair.</p>
-        <label for="repair_step_one">What repair would make the policy more fair without simply abandoning it? <span class="required-mark">*</span></label>
-        <textarea id="repair_step_one" data-required="true"></textarea>
-        <label for="repair_support_route">What support route would help people most burdened by the policy? <span class="required-mark">*</span></label>
-        <textarea id="repair_support_route" data-required="true"></textarea>
-        <label for="repair_success">What would count as a small but real improvement? <span class="required-mark">*</span></label>
-        <textarea id="repair_success" data-required="true"></textarea>
-      </section>
-
-      <section id="output">
-        <div class="section-kicker">9 · Output Card</div>
-        <h2>Generate your Chapter 5 Output Card</h2>
-        <p>The Output Card gathers your work into a format your instructor may ask you to submit or use for follow-up reflection.</p>
-        <label for="student_name">Optional name or identifier</label>
-        <input id="student_name" type="text" placeholder="Optional">
-        <div class="buttons">
-          <button type="button" onclick="generateOutput()">Generate Output Card</button>
-          <button type="button" class="secondary" onclick="copyOutput()">Copy Output Card</button>
-          <button type="button" class="secondary" onclick="downloadOutput()">Download Output Card</button>
-          <button type="button" class="secondary" onclick="downloadWorksheet()">Download Blank Worksheet</button>
-          <button type="button" class="danger" onclick="clearSaved()">Clear Saved Work</button>
-        </div>
-        <div id="completionMessage" class="success" hidden>You have completed the required workbook fields. Generate and save your Output Card.</div>
-        <h3>Output Preview</h3>
-        <pre id="outputText" class="output" aria-live="polite">Your Chapter 5 Output Card will appear here.</pre>
-      </section>
-    </main>
+    <aside class="side-card">
+      <h2>What this workbook does</h2>
+      <p><strong>Ethics skill:</strong> Coordinate with people who disagree about almost everything, without waiting for agreement first.</p>
+      <p><strong>Output:</strong> A Chapter 5 Workbook Output Card.</p>
+      <p class="small">Estimated time: 30–40 minutes. Saved only in this browser unless exported.</p>
+    </aside>
   </div>
+</header>
+<div class="wrap grid">
+  <nav aria-label="Workbook progress">
+    <div class="progress-box">
+      <strong>Progress</strong>
+      <div class="bar" aria-hidden="true"><div id="barFill"></div></div>
+      <div id="progressText" class="small">0 of 12 required responses completed.</div>
+      <ol class="toc">
+        <li><a href="#arrive">1. Arrive</a></li>
+        <li><a href="#case">2. Wangari Maathai</a></li>
+        <li><a href="#stakeholders">3. The Five Stakeholders</a></li>
+        <li><a href="#functional">4. Functional Equivalence</a></li>
+        <li><a href="#trap">5. The OS1 Trap</a></li>
+        <li><a href="#rules">6. Three Structural Rules</a></li>
+        <li><a href="#gapjunction">7. Gap Junction vs. BioBond</a></li>
+        <li><a href="#before">8. Before You Reason It Through</a></li>
+        <li><a href="#abcd">9. ABCD as Tools</a></li>
+        <li><a href="#after">10. After Working Through It</a></li>
+        <li><a href="#revision">11. The Revision Check</a></li>
+        <li><a href="#output">12. Output Card</a></li>
+      </ol>
+      <div class="buttons">
+        <button type="button" class="secondary" id="downloadWorksheet">Download worksheet</button>
+        <button type="button" class="secondary" id="saveBtn">Save now</button>
+        <button type="button" class="danger" id="clearBtn">Clear my responses</button>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <section id="arrive">
+      <div class="section-kicker">1 · Arrive</div>
+      <h2>Agreement was never the thing she needed</h2>
+      <p>This chapter's one idea: people who disagree about almost everything can still build something real together, if they share a concrete task instead of waiting to share a belief.</p>
+      <div class="warning"><strong>Privacy:</strong> Section 8 asks about a real problem in your own life. Use a real one if comfortable, or keep it general.</div>
+      <div class="checkline">
+        <input type="checkbox" id="privacyAck" data-required="true" aria-describedby="privacyAck_error">
+        <label for="privacyAck">I understand this workbook is for practicing the chapter's skills, not for disclosing private information.</label>
+      </div>
+      <p class="error-inline" id="privacyAck_error">Please check this box before continuing.</p>
+    </section>
 
-  <footer>
-    <p>Chapter 5 Workbook v1.0 · Classroom Version · Local-only HTML workbook. No network calls.</p>
-  </footer>
+    <section id="case">
+      <div class="section-kicker">2 · Wangari Maathai</div>
+      <h2>Seven trees, then fifty-one million</h2>
+      <div class="casebox">
+        <p>On June 5, 1977, Wangari Maathai planted seven trees in a park in Nairobi, honoring seven Kenyan environmental leaders. Twenty-seven years later, the movement that grew from that morning had planted more than fifty-one million trees, helped end an authoritarian government, and won her the Nobel Peace Prize.</p>
+        <p>Kenya in the 1970s faced an environmental crisis, a social crisis, a political crisis, and an economic crisis — usually treated as four separate problems. Maathai saw they were one reinforcing cycle: political corruption enabled deforestation, deforestation caused erosion and water scarcity, environmental collapse deepened women's labor and poverty, and poverty weakened communities and made them easier to manipulate. She found the single point where pulling one thread would loosen all four — a tree.</p>
+      </div>
+      <label for="case_four">Prompt 2.1 — Four crises, or one?</label>
+      <p class="hint">Why did seeing the four crises as one connected cycle make a single intervention possible, where four separate ministries working in isolation had failed?</p>
+      <textarea id="case_four" data-required="true" aria-describedby="case_four_error"></textarea>
+      <p class="error-inline" id="case_four_error">This still needs a response.</p>
+    </section>
 
-  <script>
-    const STORAGE_KEY = 'ebb_ch5_fairness_capability_workbook_v1';
-    const fields = Array.from(document.querySelectorAll('textarea, input[type="text"], select, input[type="checkbox"]'));
-    const requiredFields = Array.from(document.querySelectorAll('[data-required="true"]'));
+    <section id="stakeholders">
+      <div class="section-kicker">3 · The Five Stakeholders</div>
+      <h2>Incompatible values, one shared tree</h2>
+      <table class="mini">
+        <tr><th>Group</th><th>What They Wanted</th></tr>
+        <tr><td>Rural Women</td><td>Firewood, water, food security, income</td></tr>
+        <tr><td>International Environmental Groups</td><td>Biodiversity, climate mitigation</td></tr>
+        <tr><td>Democratic Opposition</td><td>End of authoritarian rule</td></tr>
+        <tr><td>International Women's Movement</td><td>Gender equity, feminist solidarity</td></tr>
+        <tr><td>Scientists and Academics</td><td>Ecological research, credibility</td></tr>
+      </table>
+      <label for="stakeholders_read">Prompt 3.1 — What did these five groups actually share?</label>
+      <p class="hint">A rural woman worried about firewood and a Norwegian conservation group worried about biodiversity do not share a worldview. What did they share, and why was that enough?</p>
+      <textarea id="stakeholders_read" data-required="true" aria-describedby="stakeholders_read_error"></textarea>
+      <p class="error-inline" id="stakeholders_read_error">This still needs a response.</p>
+    </section>
 
-    function fieldValue(el) {
-      if (el.type === 'checkbox') return el.checked;
-      return el.value || '';
-    }
+    <section id="functional">
+      <div class="section-kicker">4 · Functional Equivalence</div>
+      <h2>Not coincidence, not compromise, not value agreement</h2>
+      <div class="callout">Functional equivalence: genuinely different people, with genuinely different reasons, each contributing their own real capability toward the same concrete task — without ever needing to agree on why the task mattered.</div>
+      <label for="functional_distinguish">Prompt 4.1 — Distinguish it from the other three</label>
+      <p class="hint">Why is functional equivalence not the same as coincidence (getting lucky together), compromise (giving something up), or value agreement (actually agreeing)?</p>
+      <textarea id="functional_distinguish" data-required="true" aria-describedby="functional_distinguish_error"></textarea>
+      <p class="error-inline" id="functional_distinguish_error">This still needs a response.</p>
+    </section>
 
-    function setFieldValue(el, value) {
-      if (el.type === 'checkbox') el.checked = Boolean(value);
-      else el.value = value || '';
-    }
+    <section id="trap">
+      <div class="section-kicker">5 · The OS1 Trap</div>
+      <h2>Waiting for shared belief is usually backward</h2>
+      <div class="callout">"We need to agree on our values before we can work together" sounds reasonable and is often self-defeating: negotiating agreement surfaces every old grievance and gives every skeptic a chance to walk away before anything gets built.</div>
+      <label for="trap_own">Prompt 5.1 — Where has this trap shown up in your own life?</label>
+      <p class="hint">A time you or a group waited for agreement before acting, when a shared task might have worked faster.</p>
+      <textarea id="trap_own" data-required="true" aria-describedby="trap_own_error"></textarea>
+      <p class="error-inline" id="trap_own_error">This still needs a response.</p>
+    </section>
 
-    function saveWork() {
-      const data = {};
-      fields.forEach(el => { data[el.id] = fieldValue(el); });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      updateProgress();
-    }
+    <section id="rules">
+      <div class="section-kicker">6 · Three Structural Rules</div>
+      <h2>What made functional equivalence sustainable</h2>
+      <div class="callout">
+        <strong>Rule 1 — Start Small, But Think Big:</strong> small enough to finish, concrete enough to measure.<br>
+        <strong>Rule 2 — Empower the Grassroots:</strong> knowledge and authority flow toward the people doing the work.<br>
+        <strong>Rule 3 — Speak Truth to Power Through Demonstrated Competence:</strong> authority built by proving what you can do, before demanding recognition.
+      </div>
+      <label for="rules_apply">Prompt 6.1 — Apply one rule to a real coordination challenge</label>
+      <p class="hint">Pick one of the three rules and apply it to a real group or project you're part of. What would it look like in practice?</p>
+      <textarea id="rules_apply" data-required="true" aria-describedby="rules_apply_error"></textarea>
+      <p class="error-inline" id="rules_apply_error">This still needs a response.</p>
+    </section>
 
-    function loadWork() {
+    <section id="gapjunction">
+      <div class="section-kicker">7 · Gap Junction vs. BioBond</div>
+      <h2>The task opens the door. It's not what walks through it.</h2>
+      <div class="callout">A shared task — like planting a tree — is not itself a BioBond. It's a gap junction: the occasion through which real relational bonds can form, over time, among the people who take it up together.</div>
+      <label for="gapjunction_distinguish">Prompt 7.1 — Why does this distinction matter?</label>
+      <p class="hint">What's lost if a shared task and the bond it might eventually produce get treated as the same thing?</p>
+      <textarea id="gapjunction_distinguish" data-required="true" aria-describedby="gapjunction_distinguish_error"></textarea>
+      <p class="error-inline" id="gapjunction_distinguish_error">This still needs a response.</p>
+    </section>
+
+    <section id="before">
+      <div class="section-kicker">8 · Before You Reason It Through</div>
+      <h2>Your own "seven trees"</h2>
+      <div class="stop-box">
+        <p><strong class="stop-label">Stop — write before continuing</strong></p>
+        <p>Identify a large problem in your own life or community that feels too big to act on. Before you think it through, write your gut sense of why it feels too big — and whether a small first step even seems worth it. Once you move on, don't come back and revise this.</p>
+      </div>
+      <label for="own_problem_first">Prompt 8.1 — Your problem and first reaction</label>
+      <textarea id="own_problem_first" data-required="true" aria-describedby="own_problem_first_error"></textarea>
+      <p class="error-inline" id="own_problem_first_error">This still needs a response.</p>
+    </section>
+
+    <section id="abcd">
+      <div class="section-kicker">9 · ABCD as Tools</div>
+      <h2>Maathai's four capacities, used on purpose</h2>
+      <p>Her Agency was a specific, repeated choice to act inside a system built to punish it. Her Beauty and Awe — her connection to the land — sustained her through decades a purely tactical calculation might not have survived. Her Context and Contingency was seeing that the conditions were built, not simply given. Her Dynamism was the willingness to keep adapting.</p>
+      <label for="abcd_own">Prompt 9.1 — Use ABCD on your own problem</label>
+      <p class="hint">Applied to the problem you named in Section 8: which of the four — Agency, Beauty and Awe, Context and Contingency, Dynamism — is currently weakest for you, and what would strengthening it actually look like?</p>
+      <textarea id="abcd_own" data-required="true" aria-describedby="abcd_own_error"></textarea>
+      <p class="error-inline" id="abcd_own_error">This still needs a response.</p>
+    </section>
+
+    <section id="after">
+      <div class="section-kicker">10 · After Working Through It</div>
+      <h2>Your "seven trees" first step</h2>
+      <div class="stop-box">
+        <p><strong class="stop-label">Stop — write before continuing</strong></p>
+        <p>What would a genuine "seven trees" version of a first step actually look like for your problem — small enough to finish, concrete enough to measure?</p>
+      </div>
+      <label for="own_problem_final">Prompt 10.1 — Your final answer</label>
+      <textarea id="own_problem_final" data-required="true" aria-describedby="own_problem_final_error"></textarea>
+      <p class="error-inline" id="own_problem_final_error">This still needs a response.</p>
+    </section>
+
+    <section id="revision">
+      <div class="section-kicker">11 · The Revision Check</div>
+      <h2>What actually changed?</h2>
+      <label for="revision_check">Prompt 11.1 — Compare your first reaction to your final answer</label>
+      <p class="hint">Name one specific, concrete thing that changed. If nothing changed, say so honestly and explain why your first reaction already held up.</p>
+      <textarea id="revision_check" data-required="true" aria-describedby="revision_check_error"></textarea>
+      <p class="error-inline" id="revision_check_error">This still needs a response.</p>
+      <div class="checkline">
+        <input type="checkbox" id="journalRef">
+        <div><label for="journalRef">Optional: I explored this further in my Personal Ethics Journal.</label>
+        <span class="zero-credit">No description needed. This box is never worth points, in either direction.</span></div>
+      </div>
+    </section>
+
+    <section id="output">
+      <div class="section-kicker">12 · Output Card</div>
+      <h2>Chapter 5 Workbook Output Card</h2>
+      <div class="error-summary" id="errorSummary" tabindex="-1">
+        <h3>Please complete these items before creating the Output Card</h3>
+        <ul id="errorList"></ul>
+      </div>
+      <div class="buttons">
+        <button type="button" id="generateBtn">Generate Output Card</button>
+        <button type="button" class="secondary" id="copyBtn">Copy Output Card</button>
+        <button type="button" class="secondary" id="downloadBtn">Download Output Card</button>
+      </div>
+      <label for="outputText">Output Card</label>
+      <textarea id="outputText" readonly></textarea>
+      <div id="completeMsg" class="success" hidden>You've completed the Chapter 5 workbook — Maathai's case in full, functional equivalence and the three structural rules applied to your own life, and an honest process trail through your own "seven trees."</div>
+    </section>
+  </main>
+</div>
+<footer>Chapter 5 Workbook v2.0 · Ethics and Critical Thinking · Local-only HTML, no data leaves this page.</footer>
+<script>
+(function() {
+  'use strict';
+  const STORAGE_KEY = 'ch5_workbook_v2_seven_trees';
+  const requiredFields = Array.from(document.querySelectorAll('[data-required="true"]'));
+  const allFields = Array.from(document.querySelectorAll('textarea, select, input[type="checkbox"]'));
+  const barFill = document.getElementById('barFill');
+  const progressText = document.getElementById('progressText');
+  const outputText = document.getElementById('outputText');
+  const completeMsg = document.getElementById('completeMsg');
+  const errorSummary = document.getElementById('errorSummary');
+  const errorList = document.getElementById('errorList');
+  const journalRef = document.getElementById('journalRef');
+
+  function isFilled(el) { if (el.type === 'checkbox') return el.checked; return (el.value || '').trim().length > 0; }
+  function valueOf(id) { const el = document.getElementById(id); if (!el) return ''; return el.type === 'checkbox' ? (el.checked ? 'Yes' : 'No') : (el.value || '').trim(); }
+  function labelFor(id) { const l = document.querySelector('label[for="'+id+'"]'); return l ? l.textContent.replace(/\s+/g,' ').trim() : id; }
+
+  function collect() {
+    const data = {};
+    allFields.forEach(el => { data[el.id] = el.type === 'checkbox' ? el.checked : el.value; });
+    data.savedAt = new Date().toISOString();
+    return data;
+  }
+  function saveDraft() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collect())); } catch(e) { console.warn('Could not save draft', e); } }
+  function loadDraft() {
+    try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) { updateProgress(); return; }
-      try {
-        const data = JSON.parse(raw);
-        fields.forEach(el => {
-          if (Object.prototype.hasOwnProperty.call(data, el.id)) setFieldValue(el, data[el.id]);
-        });
-      } catch (err) {
-        console.warn('Saved workbook data could not be loaded.', err);
-      }
-      updateProgress();
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      allFields.forEach(el => {
+        if (!(el.id in data)) return;
+        if (el.type === 'checkbox') el.checked = Boolean(data[el.id]);
+        else el.value = data[el.id];
+      });
+    } catch(e) { console.warn('Could not load draft', e); }
+  }
+  function updateProgress() {
+    const done = requiredFields.filter(isFilled).length;
+    const total = requiredFields.length;
+    const pct = total ? Math.round((done/total)*100) : 0;
+    barFill.style.width = pct + '%';
+    progressText.textContent = done + ' of ' + total + ' required responses completed.';
+    return { done, total };
+  }
+  function clearErrors() {
+    errorList.innerHTML = ''; errorSummary.style.display = 'none';
+    requiredFields.forEach(el => { el.setAttribute('aria-invalid','false'); const e=document.getElementById(el.id+'_error'); if(e) e.style.display='none'; });
+  }
+  function validate() {
+    clearErrors();
+    const missing = requiredFields.filter(el => !isFilled(el));
+    if (missing.length) {
+      missing.forEach(el => {
+        el.setAttribute('aria-invalid','true');
+        const e = document.getElementById(el.id+'_error'); if(e) e.style.display='block';
+        const li = document.createElement('li'); const a = document.createElement('a');
+        a.href = '#' + el.id; a.textContent = labelFor(el.id); li.appendChild(a); errorList.appendChild(li);
+      });
+      errorSummary.style.display = 'block'; errorSummary.focus();
+      return false;
     }
-
-    function isComplete(el) {
-      if (el.type === 'checkbox') return el.checked;
-      return Boolean((el.value || '').trim());
-    }
-
-    function updateProgress() {
-      const done = requiredFields.filter(isComplete).length;
-      const total = requiredFields.length;
-      const pct = total ? Math.round((done / total) * 100) : 0;
-      document.getElementById('progressFill').style.width = pct + '%';
-      document.getElementById('progressText').textContent = pct + '% complete (' + done + ' of ' + total + ' required responses)';
-      document.getElementById('completionMessage').hidden = pct !== 100;
-    }
-
-    function get(id) {
-      const el = document.getElementById(id);
-      if (!el) return '';
-      if (el.type === 'checkbox') return el.checked ? 'Acknowledged' : 'Not acknowledged';
-      return (el.value || '').trim();
-    }
-
-    function generateOutput() {
-      const name = get('student_name') || 'Not provided';
-      const now = new Date().toLocaleString();
-      const output = `Chapter 5 Workbook Output Card — Fairness and Capability
-Generated: ${now}
-Optional name/identifier: ${name}
-
-1. Case first noticing
-${get('case_first_notice')}
-
-2. Why the policy may look fair at first
-${get('case_initial_fairness')}
-
-3. What the first map might miss
-${get('case_hidden_problem')}
-
-4. Rule or policy being tested
-${get('rule_policy')}
-
-5. Unknown positions to imagine
-${get('unknown_position')}
-
-6. Fairness-from-an-Unknown-Position judgment
-${get('accept_rule')}
-
-7. Benefits
-${get('benefits_people')}
-
-8. Burdens and hidden costs
-${get('burdened_people')}
-${get('hidden_costs')}
-
-9. Formal permission
-${get('formal_permission')}
-
-10. Real capability conditions
-${get('real_capability')}
-
-11. Current diagnosis
-${get('capability_status')}
-
-12. Care and dependency factors
-${get('care_dependency')}
-
-13. Moral commons at stake
-${get('moral_commons')}
-
-14. Responsibility still belongs here
-${get('responsibility_belongs')}
-
-15. What still cannot be concluded
-${get('cannot_conclude')}
-
-16. Justice repair proposal
-${get('repair_step_one')}
-
-17. Support route
-${get('repair_support_route')}
-
-18. Small but real improvement
-${get('repair_success')}
-
-Closing question: Would this rule seem fair from an unknown position, and what repair would make participation more real?`;
-      document.getElementById('outputText').textContent = output;
-      saveWork();
-      return output;
-    }
-
-    async function copyOutput() {
-      const output = generateOutput();
-      try {
-        await navigator.clipboard.writeText(output);
-        alert('Output Card copied to clipboard.');
-      } catch (err) {
-        alert('Copy failed. You can still select and copy the Output Preview manually.');
-      }
-    }
-
-    function downloadText(filename, text) {
-      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    function downloadOutput() {
-      const output = generateOutput();
-      downloadText('chapter5_fairness_capability_output_card.txt', output);
-    }
-
-    function downloadWorksheet() {
-      const worksheet = `Chapter 5 Workbook Worksheet — Fairness and Capability
-
-Privacy reminder: Use the provided case, a fictional example, a public example, a historical example, a composite example, or a low-stakes personal example. Do not disclose private, identifying, or sensitive information.
-
-Case: Equal Access on Paper
-A college moves all course materials online and announces that all students now have equal access. Some students have reliable technology, internet, quiet space, flexible schedules, and transportation. Other students rely on phones, shared devices, unstable internet, crowded living spaces, work schedules, caregiving responsibilities, or public transportation.
-
-1. What stands out first?
-
-2. Why might the policy look fair at first?
-
-3. What might that first map miss?
-
-4. What rule or policy is being tested?
-
-5. If you did not know which student you would be, what positions would you need to imagine?
-
-6. Would you accept the rule from an unknown position as written, accept it only with support, or reject it? Explain.
-
-7. Who benefits from the rule or policy?
-
-8. Who may be burdened?
-
-9. What hidden costs might some people carry?
-
-10. What is the formal permission?
-
-11. What conditions are required for the permission to become real capability?
-
-12. Best current diagnosis:
-
-13. What care responsibilities, support needs, bodies, schedules, or dependencies matter?
-
-14. What shared moral commons is at stake?
-
-15. Where does responsibility still belong?
-
-16. What still cannot be concluded?
-
-17. What repair would make the policy more fair without simply abandoning it?
-
-18. What support route would help people most burdened by the policy?
-
-19. What would count as a small but real improvement?
-`;
-      downloadText('chapter5_fairness_capability_blank_worksheet.txt', worksheet);
-    }
-
-    function clearSaved() {
-      if (!confirm('Clear saved work in this browser for Chapter 5?')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      fields.forEach(el => setFieldValue(el, el.type === 'checkbox' ? false : ''));
-      document.getElementById('outputText').textContent = 'Your Chapter 5 Output Card will appear here.';
-      updateProgress();
-    }
-
-    fields.forEach(el => {
-      el.addEventListener('input', saveWork);
-      el.addEventListener('change', saveWork);
-    });
-    loadWork();
-  </script>
+    return true;
+  }
+  function line(label, value) { return label + '\n' + (value || '[not completed]') + '\n'; }
+  function buildOutput() {
+    return [
+      'Chapter 5 Workbook Output Card — From Seven Trees to Fifty-One Million',
+      '',
+      line('Four crises, or one?', valueOf('case_four')),
+      line('What the five stakeholders actually shared:', valueOf('stakeholders_read')),
+      line('Functional equivalence, distinguished:', valueOf('functional_distinguish')),
+      line('The OS1 Trap in your own life:', valueOf('trap_own')),
+      line('One structural rule, applied:', valueOf('rules_apply')),
+      line('Gap Junction vs. BioBond — why it matters:', valueOf('gapjunction_distinguish')),
+      '',
+      line('Before you reason it through — your problem and first reaction:', valueOf('own_problem_first')),
+      line('ABCD as Tools, applied to your own problem:', valueOf('abcd_own')),
+      line('After working through it — your final answer:', valueOf('own_problem_final')),
+      line('The Revision Check — what actually changed:', valueOf('revision_check')),
+      '',
+      'Optional Journal reference: ' + (journalRef.checked ? 'Yes' : 'No')
+    ].join('\n');
+  }
+  function download(filename, text) {
+    const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  }
+  function worksheetText() {
+    return [
+      'Chapter 5 Workbook Worksheet v2.0 — From Seven Trees to Fifty-One Million',
+      '',
+      'Wangari Maathai: June 5, 1977, seven trees planted in Nairobi. Twenty-seven years later: 51+ million trees, an authoritarian government helped end, the Nobel Peace Prize.',
+      '',
+      '1. Four crises, or one — why did seeing them as one connected cycle make a single intervention possible?',
+      '',
+      '2. Five stakeholders — what did they actually share, and why was that enough?',
+      '',
+      '3. Functional equivalence — distinguish it from coincidence, compromise, and value agreement.',
+      '',
+      '4. The OS1 Trap — where has waiting for agreement before acting shown up in your own life?',
+      '',
+      '5. Three structural rules — apply one to a real coordination challenge you\'re part of.',
+      '',
+      '6. Gap Junction vs. BioBond — why does keeping these distinct matter?',
+      '',
+      '7. STOP — before continuing: name a large problem in your own life, and your honest first reaction to it. Do not revise this after moving on.',
+      '',
+      '8. ABCD as Tools — which of the four is weakest for you right now, applied to that problem?',
+      '',
+      '9. STOP — after working through it: what would a "seven trees" first step actually look like?',
+      '',
+      '10. Revision Check — what specifically changed? If nothing changed, say so honestly.',
+      '',
+      'Optional: note here if you explored this further in your Personal Ethics Journal (not graded).'
+    ].join('\n');
+  }
+  document.addEventListener('input', e => { if (allFields.includes(e.target)) { updateProgress(); saveDraft(); } });
+  document.addEventListener('change', e => { if (allFields.includes(e.target)) { updateProgress(); saveDraft(); } });
+  document.getElementById('saveBtn').addEventListener('click', () => { saveDraft(); alert('Draft saved in this browser.'); });
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    if (!confirm('Clear this saved Chapter 5 draft from this browser?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    allFields.forEach(el => { if (el.type === 'checkbox') el.checked = false; else el.value = ''; });
+    outputText.value = ''; completeMsg.hidden = true; clearErrors(); updateProgress();
+  });
+  document.getElementById('generateBtn').addEventListener('click', () => {
+    if (!validate()) return;
+    outputText.value = buildOutput();
+    completeMsg.hidden = false;
+    saveDraft();
+  });
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    if (!outputText.value.trim()) outputText.value = buildOutput();
+    try { await navigator.clipboard.writeText(outputText.value); alert('Output Card copied.'); }
+    catch(e) { outputText.select(); document.execCommand('copy'); alert('Output Card selected/copied.'); }
+  });
+  document.getElementById('downloadBtn').addEventListener('click', () => {
+    if (!outputText.value.trim()) outputText.value = buildOutput();
+    download('chapter_5_output_card.txt', outputText.value);
+  });
+  document.getElementById('downloadWorksheet').addEventListener('click', () => {
+    download('chapter_5_workbook_worksheet.txt', worksheetText());
+  });
+  loadDraft();
+  updateProgress();
+}());
+</script>
 </body>
 </html>
