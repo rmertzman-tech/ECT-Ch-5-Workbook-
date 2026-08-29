@@ -2,7 +2,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Chapter 5 Workbook v2.0 — From Seven Trees to Fifty-One Million</title>
+<title>Chapter 5 Workbook v2.1 — From Seven Trees to Fifty-One Million</title>
 <meta content="Accessible Chapter 5 workbook rebuilt on the finalized chapter text: Wangari Maathai's real case, functional equivalence, the OS1 Trap, three structural rules, gap junction, and the process trail." name="description"/>
 <style>
     :root {
@@ -48,6 +48,8 @@
     .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
     label { display:block; font-weight:800; margin:14px 0 6px; color:#2f2a24; }
     .hint { color:var(--muted); font-size:.92rem; margin-top:-3px; }
+    .response-hint { margin:8px 0 0; padding:10px 12px; background:#eef2e6; border:1px solid #c7d3b8; border-left:4px solid var(--accent-dark); border-radius:10px; font-size:.9rem; color:#3a4530; }
+    .response-hint strong { color:var(--accent-dark); }
     textarea, select { width:100%; font:inherit; color:var(--ink); background:#fffdf8; border:1px solid #bfb7a8; border-radius:12px; padding:10px 12px; }
     textarea { min-height:94px; resize:vertical; }
     textarea:focus, select:focus, button:focus { outline:3px solid var(--accent-dark); outline-offset:2px; }
@@ -76,7 +78,7 @@
 <header>
   <div class="wrap hero">
     <div class="hero-card">
-      <div class="eyebrow">Chapter 5 Workbook · From Seven Trees to Fifty-One Million · v2.0</div>
+      <div class="eyebrow">Chapter 5 Workbook · From Seven Trees to Fifty-One Million · v2.1</div>
       <h1>From Seven Trees to Fifty-One Million</h1>
       <p class="tagline"><strong>Wangari Maathai's real case</strong>, functional equivalence, the OS1 Trap, and three structural rules for coordinating across real disagreement — with a genuine process trail.</p>
       <div class="pill-row">
@@ -99,7 +101,7 @@
     <div class="progress-box">
       <strong>Progress</strong>
       <div class="bar" aria-hidden="true"><div id="barFill"></div></div>
-      <div id="progressText" class="small">0 of 12 required responses completed.</div>
+      <div id="progressText" class="small">0 of 11 required responses completed.</div>
       <ol class="toc">
         <li><a href="#arrive">1. Arrive</a></li>
         <li><a href="#case">2. Wangari Maathai</a></li>
@@ -132,6 +134,12 @@
         <label for="privacyAck">I understand this workbook is for practicing the chapter's skills, not for disclosing private information.</label>
       </div>
       <p class="error-inline" id="privacyAck_error">Please check this box before continuing.</p>
+      <div class="callout" aria-labelledby="guidance-heading">
+        <h3 id="guidance-heading">Before You Start Typing</h3>
+        <p>The boxes in this workbook are graded responses, not a warm-up. A thin answer restates the obvious. A full answer names something specific and traceable, not a general truth that could apply to almost anything.</p>
+        <p>For example: asked why a plan failed, a thin answer says "it wasn't executed well." A full answer says "the rollout depended on three teams syncing their start dates, and two of them never actually confirmed the date with each other." Both are about the same length. Only one of them could actually be checked against what happened.</p>
+        <p>Each prompt below has a short note under it naming the specific shortcut a rushed answer tends to take on that exact question. Read it before you write, not after you get your grade back.</p>
+      </div>
     </section>
 
     <section id="case">
@@ -143,7 +151,8 @@
       </div>
       <label for="case_four">Prompt 2.1 — Four crises, or one?</label>
       <p class="hint">Why did seeing the four crises as one connected cycle make a single intervention possible, where four separate ministries working in isolation had failed?</p>
-      <textarea id="case_four" data-required="true" aria-describedby="case_four_error"></textarea>
+      <p class="response-hint" id="case_four_rhint"><strong>Watch for:</strong> writing "because everything is connected" — that's true of nearly any four problems and explains nothing about this one specifically. A full answer traces the actual loop: which crisis fed into which, and why a tree could interrupt that loop at one point instead of needing four separate fixes.</p>
+      <textarea id="case_four" data-required="true" aria-describedby="case_four_error case_four_rhint"></textarea>
       <p class="error-inline" id="case_four_error">This still needs a response.</p>
     </section>
 
@@ -160,7 +169,8 @@
       </table>
       <label for="stakeholders_read">Prompt 3.1 — What did these five groups actually share?</label>
       <p class="hint">A rural woman worried about firewood and a Norwegian conservation group worried about biodiversity do not share a worldview. What did they share, and why was that enough?</p>
-      <textarea id="stakeholders_read" data-required="true" aria-describedby="stakeholders_read_error"></textarea>
+      <p class="response-hint" id="stakeholders_read_rhint"><strong>Watch for:</strong> saying they "all wanted to help" or "cared about the same cause" — that assumes a shared value the table above shows they didn't have. A full answer names the one concrete thing they actually held in common, despite wanting it for entirely different reasons.</p>
+      <textarea id="stakeholders_read" data-required="true" aria-describedby="stakeholders_read_error stakeholders_read_rhint"></textarea>
       <p class="error-inline" id="stakeholders_read_error">This still needs a response.</p>
     </section>
 
@@ -170,7 +180,8 @@
       <div class="callout">Functional equivalence: genuinely different people, with genuinely different reasons, each contributing their own real capability toward the same concrete task — without ever needing to agree on why the task mattered.</div>
       <label for="functional_distinguish">Prompt 4.1 — Distinguish it from the other three</label>
       <p class="hint">Why is functional equivalence not the same as coincidence (getting lucky together), compromise (giving something up), or value agreement (actually agreeing)?</p>
-      <textarea id="functional_distinguish" data-required="true" aria-describedby="functional_distinguish_error"></textarea>
+      <p class="response-hint" id="functional_distinguish_rhint"><strong>Watch for:</strong> addressing only one of the three alternatives — usually just "it's not the same as agreeing" — and skipping coincidence and compromise. A full answer distinguishes functional equivalence from all three, since each one fails to describe it for a different reason.</p>
+      <textarea id="functional_distinguish" data-required="true" aria-describedby="functional_distinguish_error functional_distinguish_rhint"></textarea>
       <p class="error-inline" id="functional_distinguish_error">This still needs a response.</p>
     </section>
 
@@ -180,7 +191,8 @@
       <div class="callout">"We need to agree on our values before we can work together" sounds reasonable and is often self-defeating: negotiating agreement surfaces every old grievance and gives every skeptic a chance to walk away before anything gets built.</div>
       <label for="trap_own">Prompt 5.1 — Where has this trap shown up in your own life?</label>
       <p class="hint">A time you or a group waited for agreement before acting, when a shared task might have worked faster.</p>
-      <textarea id="trap_own" data-required="true" aria-describedby="trap_own_error"></textarea>
+      <p class="response-hint" id="trap_own_rhint"><strong>Watch for:</strong> describing a disagreement itself without ever naming the specific action that got delayed while everyone waited to agree first. A full answer names both: what was stalled, and what shared task might have moved forward without waiting on agreement.</p>
+      <textarea id="trap_own" data-required="true" aria-describedby="trap_own_error trap_own_rhint"></textarea>
       <p class="error-inline" id="trap_own_error">This still needs a response.</p>
     </section>
 
@@ -194,7 +206,8 @@
       </div>
       <label for="rules_apply">Prompt 6.1 — Apply one rule to a real coordination challenge</label>
       <p class="hint">Pick one of the three rules and apply it to a real group or project you're part of. What would it look like in practice?</p>
-      <textarea id="rules_apply" data-required="true" aria-describedby="rules_apply_error"></textarea>
+      <p class="response-hint" id="rules_apply_rhint"><strong>Watch for:</strong> restating the rule's definition back — "start small means starting small" — without ever naming your actual group or project. A full answer describes one specific, concrete change that rule would produce in that real setting.</p>
+      <textarea id="rules_apply" data-required="true" aria-describedby="rules_apply_error rules_apply_rhint"></textarea>
       <p class="error-inline" id="rules_apply_error">This still needs a response.</p>
     </section>
 
@@ -204,7 +217,8 @@
       <div class="callout">A shared task — like planting a tree — is not itself a BioBond. It's a gap junction: the occasion through which real relational bonds can form, over time, among the people who take it up together.</div>
       <label for="gapjunction_distinguish">Prompt 7.1 — Why does this distinction matter?</label>
       <p class="hint">What's lost if a shared task and the bond it might eventually produce get treated as the same thing?</p>
-      <textarea id="gapjunction_distinguish" data-required="true" aria-describedby="gapjunction_distinguish_error"></textarea>
+      <p class="response-hint" id="gapjunction_distinguish_rhint"><strong>Watch for:</strong> an answer about disappointment or unmet expectations — that's a feeling, not the structural mistake. A full answer names what specifically goes wrong in how you judge or plan the task itself if you assume the bond is guaranteed to follow from it.</p>
+      <textarea id="gapjunction_distinguish" data-required="true" aria-describedby="gapjunction_distinguish_error gapjunction_distinguish_rhint"></textarea>
       <p class="error-inline" id="gapjunction_distinguish_error">This still needs a response.</p>
     </section>
 
@@ -216,7 +230,8 @@
         <p>Identify a large problem in your own life or community that feels too big to act on. Before you think it through, write your gut sense of why it feels too big — and whether a small first step even seems worth it. Once you move on, don't come back and revise this.</p>
       </div>
       <label for="own_problem_first">Prompt 8.1 — Your problem and first reaction</label>
-      <textarea id="own_problem_first" data-required="true" aria-describedby="own_problem_first_error"></textarea>
+      <p class="response-hint" id="own_problem_first_rhint"><strong>Watch for:</strong> naming something so large and abstract — "poverty," "climate change" — that it has no edges you could ever act on, rather than a specific version of it that actually touches your own life or community. And if your answer already includes a plan or a reason it can't be solved, it's not a first reaction anymore.</p>
+      <textarea id="own_problem_first" data-required="true" aria-describedby="own_problem_first_error own_problem_first_rhint"></textarea>
       <p class="error-inline" id="own_problem_first_error">This still needs a response.</p>
     </section>
 
@@ -226,7 +241,8 @@
       <p>Her Agency was a specific, repeated choice to act inside a system built to punish it. Her Beauty and Awe — her connection to the land — sustained her through decades a purely tactical calculation might not have survived. Her Context and Contingency was seeing that the conditions were built, not simply given. Her Dynamism was the willingness to keep adapting.</p>
       <label for="abcd_own">Prompt 9.1 — Use ABCD on your own problem</label>
       <p class="hint">Applied to the problem you named in Section 8: which of the four — Agency, Beauty and Awe, Context and Contingency, Dynamism — is currently weakest for you, and what would strengthening it actually look like?</p>
-      <textarea id="abcd_own" data-required="true" aria-describedby="abcd_own_error"></textarea>
+      <p class="response-hint" id="abcd_own_rhint"><strong>Watch for:</strong> naming a capacity and then just saying you need "more" of it — more agency, more awe — without describing what a concrete strengthening move would actually look like. A full answer names a specific action, not a general resolution to improve.</p>
+      <textarea id="abcd_own" data-required="true" aria-describedby="abcd_own_error abcd_own_rhint"></textarea>
       <p class="error-inline" id="abcd_own_error">This still needs a response.</p>
     </section>
 
@@ -238,7 +254,8 @@
         <p>What would a genuine "seven trees" version of a first step actually look like for your problem — small enough to finish, concrete enough to measure?</p>
       </div>
       <label for="own_problem_final">Prompt 10.1 — Your final answer</label>
-      <textarea id="own_problem_final" data-required="true" aria-describedby="own_problem_final_error"></textarea>
+      <p class="response-hint" id="own_problem_final_rhint"><strong>Watch for:</strong> a first step that's really the whole problem restated smaller — "start fixing it" — rather than something genuinely small enough to finish and specific enough that you'd know, concretely, whether you'd actually done it.</p>
+      <textarea id="own_problem_final" data-required="true" aria-describedby="own_problem_final_error own_problem_final_rhint"></textarea>
       <p class="error-inline" id="own_problem_final_error">This still needs a response.</p>
     </section>
 
@@ -247,7 +264,8 @@
       <h2>What actually changed?</h2>
       <label for="revision_check">Prompt 11.1 — Compare your first reaction to your final answer</label>
       <p class="hint">Name one specific, concrete thing that changed. If nothing changed, say so honestly and explain why your first reaction already held up.</p>
-      <textarea id="revision_check" data-required="true" aria-describedby="revision_check_error"></textarea>
+      <p class="response-hint" id="revision_check_rhint"><strong>Watch for:</strong> writing "nothing changed" and stopping there. That's an allowed outcome, but only when you explain specifically why your first reaction survived being tested by the case, the rules, and ABCD — not just assert that it did.</p>
+      <textarea id="revision_check" data-required="true" aria-describedby="revision_check_error revision_check_rhint"></textarea>
       <p class="error-inline" id="revision_check_error">This still needs a response.</p>
       <div class="checkline">
         <input type="checkbox" id="journalRef">
@@ -274,7 +292,7 @@
     </section>
   </main>
 </div>
-<footer>Chapter 5 Workbook v2.0 · Ethics and Critical Thinking · Local-only HTML, no data leaves this page.</footer>
+<footer>Chapter 5 Workbook v2.1 · Ethics and Critical Thinking · Local-only HTML, no data leaves this page.</footer>
 <script>
 (function() {
   'use strict';
@@ -367,7 +385,7 @@
   }
   function worksheetText() {
     return [
-      'Chapter 5 Workbook Worksheet v2.0 — From Seven Trees to Fifty-One Million',
+      'Chapter 5 Workbook Worksheet v2.1 — From Seven Trees to Fifty-One Million',
       '',
       'Wangari Maathai: June 5, 1977, seven trees planted in Nairobi. Twenty-seven years later: 51+ million trees, an authoritarian government helped end, the Nobel Peace Prize.',
       '',
